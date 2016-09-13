@@ -1,6 +1,5 @@
 package com.smile.cookbook.imp;
 
-import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodForTag;
 import com.smile.cookbook.entity.FoodStyle;
 import com.smile.cookbook.entity.SingleFood;
@@ -10,7 +9,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 /**
@@ -28,8 +26,6 @@ public interface RetrofitService {
     Call<FoodForTag> getFoodForTag(@FieldMap Map<String ,String> map);
 
 
-    @GET("menu/query/{id}/{key}")
-    Call<Food> getFood(@Path("id") String id,@Path("key") String key);
 
 
     @GET("menu/query?")

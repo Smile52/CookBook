@@ -48,9 +48,10 @@ public class TabController {
             @Override
             public void onResponse(Call<FoodStyle> call, Response<FoodStyle> response) {
                 FoodStyle style=response.body();
-                Log.e("dandy",""+style.toString());
+               // Log.e("dandy",""+style.toString());
                 List<FoodStyle.ResultBean.ChildsBean> childsBeen=style.getResult().getChilds();
                 SQLController.getInstances(mContext).saveTypeInfo(childsBeen);
+                SQLController.getInstances(mContext).getTypeInfo();
             }
 
             @Override
@@ -58,6 +59,12 @@ public class TabController {
                 Log.e("dandy","请求失败");
             }
         });
+
+
+    }
+
+    public void setTabData(){
+
     }
 
 }
