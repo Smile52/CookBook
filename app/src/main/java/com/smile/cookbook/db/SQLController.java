@@ -7,7 +7,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodStyle;
+import com.smile.cookbook.ui.XLog;
+import com.smile.cookbook.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +61,7 @@ public class SQLController {
         SQLiteStatement stmt=mDB.compileStatement(sql);
         for(FoodStyle.ResultBean.ChildsBean bean:childsBeen){
           //  stmt.bindString(1,bean.getCategoryInfo().toString());
-            stmt.bindString(1, bean.getCategoryInfo().toString());
+            stmt.bindString(1, Utils.getTypeName(bean));
             stmt.bindString(2,bean.getChilds().toString());
             stmt.execute();
             stmt.clearBindings();
@@ -67,19 +71,16 @@ public class SQLController {
         mDB.close();
     }
 
-    public synchronized List<FoodStyle.ResultBean.ChildsBean>  getTypeInfo(){
-        List<FoodStyle.ResultBean.ChildsBean> beanList=new ArrayList<>();
+    public synchronized List<Food>  getTypeInfo(){
+        List<Food> beanList=new ArrayList<>();
         mDB=sSQLiteHelper.getReadableDatabase();
         Cursor cursor = null;
         try {
             cursor=mDB.query(SQLiteHelper.TYPE_TABLE_NAME,null,null,null,null,null,null);
-            Gson gson=new Gson();
-
             while (cursor.moveToNext()){
-                FoodStyle.ResultBean.ChildsBean bean=new FoodStyle.ResultBean.ChildsBean();
-                bean.setCategoryInfo(gson.fromJson(cursor.getString(1), FoodStyle.ResultBean.ChildsBean.CategoryInfoBean.class));
-               // bean.setChilds(gson.fromJson(cursor.getString(2), new TypeToken<List<FoodStyle.ResultBean.ChildsBean.ChildBean>>().getType()));
-
+                Food food=new Food();
+                food.setName(cursor.getString(1));
+                getObject(cursor.getString(2));
             }
         }catch (Exception e){
             cursor.close();
@@ -87,5 +88,13 @@ public class SQLController {
         return beanList;
     }
 
+    private  List<Food.ChildBean> getObject(String json){
+        List<Food.ChildBean> list;
+        XLog.e("dandy","json "+json);
+        Gson gson=new Gson();
+        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean>>(){}.getType());
+        XLog.e("dandy"," list"+list.toString());
 
+        return list;
+    }
 }
