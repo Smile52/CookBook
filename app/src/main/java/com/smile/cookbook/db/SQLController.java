@@ -13,6 +13,10 @@ import com.smile.cookbook.entity.FoodStyle;
 import com.smile.cookbook.ui.XLog;
 import com.smile.cookbook.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +62,13 @@ public class SQLController {
         String sql="INSERT INTO "+SQLiteHelper.TYPE_TABLE_NAME+ " ("+SQLiteHelper.TYPE_NAME +", "+ SQLiteHelper.TYPE_CHILD+  ") VALUES(?,?)";
         mDB=sSQLiteHelper.getWritableDatabase();
         mDB.beginTransaction();
+
         SQLiteStatement stmt=mDB.compileStatement(sql);
         for(FoodStyle.ResultBean.ChildsBean bean:childsBeen){
+            XLog.e("dandy","bean "+bean.getChilds().toString());
           //  stmt.bindString(1,bean.getCategoryInfo().toString());
             stmt.bindString(1, Utils.getTypeName(bean));
-            stmt.bindString(2,bean.getChilds().toString());
+            stmt.bindString(2,jsonToString(bean));
             stmt.execute();
             stmt.clearBindings();
         }
@@ -88,13 +94,39 @@ public class SQLController {
         return beanList;
     }
 
-    private  List<Food.ChildBean> getObject(String json){
-        List<Food.ChildBean> list;
-        XLog.e("dandy","json "+json);
+    private  List<Food.ChildBean.CategoryInfoBean> getObject(String json){
+        XLog.e("dandy","  "+json);
+        List<Food.ChildBean.CategoryInfoBean> list=null;
         Gson gson=new Gson();
-        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean>>(){}.getType());
-        XLog.e("dandy"," list"+list.toString());
+        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean.CategoryInfoBean>>(){}.getType());
+        XLog.e("dandy","list "+list.size() );
 
         return list;
+    }
+
+    /**
+     * 将json转换成字符串保存到本地来
+     * @param childsBeen
+     * @return
+     */
+    private String jsonToString(FoodStyle.ResultBean.ChildsBean childsBeen){
+        JSONArray array=new JSONArray();
+        int count =childsBeen.getChilds().size();
+        try {
+        for (int i=0;i<count;i++){
+            FoodStyle.ResultBean.ChildsBean.ChildBean bean=childsBeen.getChilds().get(i);
+            JSONObject object=new JSONObject();
+
+            object.put("ctgId",bean.getCategoryInfo().getCtgId());
+            object.put("name",bean.getCategoryInfo().getName());
+            object.put("parentId",bean.getCategoryInfo().getParentId());
+            array.put(object);
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return array.toString();
     }
 }
