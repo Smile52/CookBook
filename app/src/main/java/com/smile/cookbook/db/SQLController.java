@@ -65,7 +65,7 @@ public class SQLController {
 
         SQLiteStatement stmt=mDB.compileStatement(sql);
         for(FoodStyle.ResultBean.ChildsBean bean:childsBeen){
-            XLog.e("dandy","bean "+bean.getChilds().toString());
+          //  XLog.e("dandy","bean "+bean.getChilds().toString());
           //  stmt.bindString(1,bean.getCategoryInfo().toString());
             stmt.bindString(1, Utils.getTypeName(bean));
             stmt.bindString(2,jsonToString(bean));
@@ -77,6 +77,10 @@ public class SQLController {
         mDB.close();
     }
 
+    /**
+     * 获取菜品信息
+     * @return
+     */
     public synchronized List<Food>  getTypeInfo(){
         List<Food> beanList=new ArrayList<>();
         mDB=sSQLiteHelper.getReadableDatabase();
@@ -86,7 +90,9 @@ public class SQLController {
             while (cursor.moveToNext()){
                 Food food=new Food();
                 food.setName(cursor.getString(1));
-                getObject(cursor.getString(2));
+                food.setChildList(getObject(cursor.getString(2)));
+
+                beanList.add(food);
             }
         }catch (Exception e){
             cursor.close();
@@ -94,11 +100,11 @@ public class SQLController {
         return beanList;
     }
 
-    private  List<Food.ChildBean.CategoryInfoBean> getObject(String json){
-        XLog.e("dandy","  "+json);
-        List<Food.ChildBean.CategoryInfoBean> list=null;
+    private List<Food.ChildBean> getObject(String json){
+       // XLog.e("dandy","  "+json);
+        List<Food.ChildBean> list=null;
         Gson gson=new Gson();
-        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean.CategoryInfoBean>>(){}.getType());
+        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean>>(){}.getType());
         XLog.e("dandy","list "+list.size() );
 
         return list;

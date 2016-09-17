@@ -7,9 +7,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.smile.cookbook.config.Config;
 import com.smile.cookbook.db.SQLController;
+import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodStyle;
 import com.smile.cookbook.imp.RetrofitService;
+import com.smile.cookbook.ui.XLog;
+import com.smile.cookbook.view.PagerItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class TabController {
     private Context mContext;
+    private List<Food> mFoods;
     public TabController(Context context) {
         super();
         mContext=context;
@@ -63,8 +68,17 @@ public class TabController {
 
     }
 
-    public void setTabData(){
+    public List<PagerItem> setTabData(){
+        List<PagerItem> itemList=new ArrayList<>();
 
+        mFoods=SQLController.getInstances(mContext).getTypeInfo();
+        XLog.e("dandy","www"+mFoods.size());
+        for (Food food : mFoods){
+            itemList.add(new PagerItem(food.getName(),food.getChildList().toString()));
+            XLog.e("dandy"," "+food.getName());
+        }
+        return itemList;
     }
+
 
 }

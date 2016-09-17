@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.smile.cookbook.R;
 
 /**
- * Created by moon.zhong on 2015/5/25.
+ *
  */
 public class SlidingTabView extends LinearLayout {
 

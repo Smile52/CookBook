@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.smile.cookbook.R;
 
 /**
- * Created by moon.zhong.
+ *
  */
 public class SlidingTabLayout extends HorizontalScrollView {
     private static final int TITLE_OFFSET_DIPS = 24;
@@ -153,7 +153,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 /*计算出正在的偏移量*/
                 targetScrollX -= mTitleOffset;
             }
-            Log.v("zgy","==================mWidth======="+mWidth) ;
             /*这个时候偏移的量就是屏幕的正中间*/
             scrollTo(targetScrollX, 0);
         }
