@@ -25,14 +25,15 @@
             android:background="?attr/colorPrimary"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        >
+            android:elevation="10dp"
+            >
 
         </android.support.v7.widget.Toolbar>
         <com.smile.cookbook.view.SlidingTabLayout
             android:id="@+id/cook_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:elevation="10dp"
             >
 
         </com.smile.cookbook.view.SlidingTabLayout>
