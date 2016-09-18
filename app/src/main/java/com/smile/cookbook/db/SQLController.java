@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodStyle;
 import com.smile.cookbook.utils.Utils;
+import com.smile.cookbook.utils.XLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,8 +104,9 @@ public class SQLController {
        // XLog.e("dandy","  "+json);
         List<Food.ChildBean> list=null;
         Gson gson=new Gson();
-        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean>>(){}.getType());
-        //XLog.e("dandy","list "+list.size() );
+        list=gson.fromJson(json,new TypeToken<List<Food.ChildBean.CategoryInfoBean>>(){}.getType());
+
+        XLog.e("dandy","list "+list.toString() );
 
         return list;
     }

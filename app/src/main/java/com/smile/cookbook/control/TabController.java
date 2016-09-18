@@ -102,7 +102,7 @@ public class TabController {
         //XLog.e("dandy","www"+mFoods.size());
         for (Food food : mFoods){
             itemList.add(new PagerItem(food.getName(),food.getChildList().toString()));
-           // XLog.e("dandy"," "+food.getName());
+            //XLog.e("dandy"," "+food.toString());
         }
         return itemList;
     }

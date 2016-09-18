@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.smile.cookbook.R;
 import com.smile.cookbook.adapter.FoodAdapter;
 
-/**
+/**类别fragment
  * Created by Smile on 2016/9/9.
  */
 public class CookFragment extends Fragment {
@@ -45,10 +45,17 @@ public class CookFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextView= (TextView) view.findViewById(R.id.cook_tv);
-        mTextView= (TextView) view.findViewById(R.id.foods_rcv);
+        mFoodViews= (RecyclerView) view.findViewById(R.id.foods_rcv);
         mRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
         Bundle bundle = getArguments() ;
         String msg = bundle.getString("msg") ;
+
         mTextView.setText(msg);
+
     }
+
+    public void  addParams(String id){
+
+    }
+
 }

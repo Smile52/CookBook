@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/**fragment适配器
  * Created by Smile on 2016/9/10.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
