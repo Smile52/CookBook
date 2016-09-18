@@ -2,6 +2,7 @@ package com.smile.cookbook.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.smile.cookbook.entity.FoodForTag;
 import com.smile.cookbook.entity.FoodStyle;
 import com.smile.cookbook.entity.SingleFood;
 import com.smile.cookbook.imp.ImpRequest;
@@ -115,7 +116,10 @@ public class RetrofitUtil {
         });
     }
 
-    public void getType(Map<String,String> map,final ImpRequest request){
+    public void getFoodStyle(Map<String,String> map,final ImpRequest request){
+        if (map==null){
+            return;
+        }
         Call<FoodStyle> call = sRetrofitService.getFoodStyle(map);
         call.enqueue(new Callback<FoodStyle>() {
             @Override
@@ -137,6 +141,34 @@ public class RetrofitUtil {
                 }
             }
         });
+    }
+
+    public void getFoodForTag(Map<String,String> map,final  ImpRequest request){
+        if (map==null){
+            return;
+        }
+        Call<FoodForTag> call=sRetrofitService.getFoodForTag(map);
+        call.enqueue(new Callback<FoodForTag>() {
+            @Override
+            public void onResponse(Call<FoodForTag> call, Response<FoodForTag> response) {
+                FoodForTag forTag=response.body();
+                if (request!=null){
+                    request.onSuccess(forTag);
+                }else {
+                    if (request==null){
+                        request.onFailure();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FoodForTag> call, Throwable t) {
+                if (request!=null){
+                    request.onFailure();
+                }
+            }
+        });
+
     }
 
 }

@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodStyle;
-import com.smile.cookbook.ui.XLog;
 import com.smile.cookbook.utils.Utils;
 
 import org.json.JSONArray;
@@ -105,7 +104,7 @@ public class SQLController {
         List<Food.ChildBean> list=null;
         Gson gson=new Gson();
         list=gson.fromJson(json,new TypeToken<List<Food.ChildBean>>(){}.getType());
-        XLog.e("dandy","list "+list.size() );
+        //XLog.e("dandy","list "+list.size() );
 
         return list;
     }

@@ -8,4 +8,5 @@
     <color name="color_line">#ffe3e3e3</color>
     <color name="color_white">#ffffffff</color>
     <color name="color_press">#ffeeeeee</color>
+    <color name="food_name_text_bg">#52817f7f</color>
 </resources>

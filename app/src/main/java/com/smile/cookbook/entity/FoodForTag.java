@@ -143,10 +143,10 @@ public class FoodForTag {
 
             public static class RecipeBean {
                 private String img;
-                private String ingredients;
-                private String method;
-                private String sumary;
-                private String title;
+                private String ingredients;//配料
+                private String method;//方法
+                private String sumary;//总结
+                private String title;//标题
 
                 public String getImg() {
                     return img;

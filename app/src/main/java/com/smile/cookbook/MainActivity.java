@@ -11,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import com.smile.cookbook.adapter.ViewPagerAdapter;
 import com.smile.cookbook.control.TabController;
 import com.smile.cookbook.databinding.MainActivityBinding;
-import com.smile.cookbook.db.SQLController;
-import com.smile.cookbook.ui.DefultData;
 import com.smile.cookbook.view.PagerItem;
 import com.smile.cookbook.view.SlidingTabLayout;
 
@@ -26,15 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private MainActivityBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MainActivityBinding binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
         mPager= (ViewPager) findViewById(R.id.cook_vp);
         mTabLayout= (SlidingTabLayout) findViewById(R.id.cook_tab);
         TabController control=new TabController(getApplicationContext());
-        control.getFoodType();
         mTab=control.setTabData();
         mPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),mTab));
         mTabLayout.setViewPager(mPager);
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     public void getStyle(){
 

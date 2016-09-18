@@ -1,4 +1,4 @@
-package com.smile.cookbook.ui;
+package com.smile.cookbook.utils;
 
 import android.os.Environment;
 import android.util.Log;
