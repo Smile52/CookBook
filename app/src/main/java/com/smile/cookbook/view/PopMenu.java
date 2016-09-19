@@ -32,8 +32,9 @@ public class PopMenu {
         mType= (RecyclerView) view.findViewById(R.id.type_rcv);
         mAdapter=new FoodTypeAdapter(mContext,mCategoryLists);
         mType.setLayoutManager(new LinearLayoutManager(mContext));
-        mType.setAdapter(mAdapter);
 
+        mType.setAdapter(mAdapter);
+        mType.addItemDecoration(new MyDecoration(mContext, MyDecoration.VERTICAL_LIST));
         mPopupWindow = new PopupWindow(view, 100, LinearLayout.LayoutParams.WRAP_CONTENT);
         mPopupWindow = new PopupWindow(view,
                 context.getResources().getDimensionPixelSize(R.dimen.pop_width),

@@ -13,7 +13,7 @@ import com.smile.cookbook.utils.XLog;
 
 import java.util.List;
 
-/**
+/**菜品种类适配器
  * Created by Smile on 2016/9/19.
  */
 public class FoodTypeAdapter extends RecyclerView.Adapter<FoodTypeAdapter.TypeHold>{
