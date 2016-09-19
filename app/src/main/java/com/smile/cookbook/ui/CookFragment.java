@@ -68,6 +68,7 @@ public class CookFragment extends Fragment {
             }
         });
 
+
     }
 
     public void  addParams(String id){

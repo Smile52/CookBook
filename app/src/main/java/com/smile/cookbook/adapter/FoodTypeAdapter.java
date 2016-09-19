@@ -13,12 +13,13 @@ import com.smile.cookbook.utils.XLog;
 
 import java.util.List;
 
-/**菜品种类适配器
+/**二级菜类别种类适配器
  * Created by Smile on 2016/9/19.
  */
 public class FoodTypeAdapter extends RecyclerView.Adapter<FoodTypeAdapter.TypeHold>{
     private Context mContext;
     private List<Food.ChildBean.CategoryInfoBean> mDatas;
+    private OnItemClickListener mOnItemClickListener;
 
     public FoodTypeAdapter(Context context, List<Food.ChildBean.CategoryInfoBean> datas) {
         mContext = context;
@@ -32,14 +33,30 @@ public class FoodTypeAdapter extends RecyclerView.Adapter<FoodTypeAdapter.TypeHo
     }
 
     @Override
-    public void onBindViewHolder(TypeHold holder, int position) {
+    public void onBindViewHolder(final TypeHold holder, int position) {
         XLog.e("dandy","ee"+mDatas.toString());
         holder.typeName.setText(mDatas.get(position).getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getLayoutPosition(); // 获取当前的postion
+                mOnItemClickListener.onItemClickListener(holder.itemView,position); // 2
+            }
+        });
+    }
+
+    public void setmOnItemClickListener(OnItemClickListener itemClickListener){
+        this.mOnItemClickListener=itemClickListener;
     }
 
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    //item点击事件接口
+    public interface OnItemClickListener{
+        void onItemClickListener(View view,int postion);
     }
 
      class TypeHold extends RecyclerView.ViewHolder{

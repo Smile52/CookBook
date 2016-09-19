@@ -30,8 +30,6 @@ public class TabController {
 
     }
 
-
-
     public void get(){
         Map<String ,String> map=new HashMap<>();
         map.put("key", Config.KEY);

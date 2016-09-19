@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.smile.cookbook.R;
 import com.smile.cookbook.adapter.FoodTypeAdapter;
@@ -35,11 +36,10 @@ public class PopMenu {
 
         mType.setAdapter(mAdapter);
         mType.addItemDecoration(new MyDecoration(mContext, MyDecoration.VERTICAL_LIST));
-        mPopupWindow = new PopupWindow(view, 100, LinearLayout.LayoutParams.WRAP_CONTENT);
-        mPopupWindow = new PopupWindow(view,
-                context.getResources().getDimensionPixelSize(R.dimen.pop_width),
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-
+        //设置popwindow的宽和高
+        mPopupWindow = new PopupWindow(
+                view, context.getResources().getDimensionPixelSize(R.dimen.pop_width),
+                context.getResources().getDimensionPixelSize(R.dimen.pop_height));
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
@@ -49,13 +49,19 @@ public class PopMenu {
         mPopupWindow.showAsDropDown(parent, 10,
                 //保证尺寸是根据屏幕像素密度来的
                 mContext.getResources().getDimensionPixelSize(R.dimen.pop_width));
-
         // 使其聚集
         mPopupWindow.setFocusable(true);
         // 设置允许在外点击消失
         mPopupWindow.setOutsideTouchable(true);
         //刷新状态
         mPopupWindow.update();
+        //二级菜类别的点击事件
+        mAdapter.setmOnItemClickListener(new FoodTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int postion) {
+                Toast.makeText(mContext,"点击了"+postion,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
