@@ -62,7 +62,7 @@ public class WecomeActivity extends BaseActivity {
                public void run() {
                    startActivity();
                }
-           },2000);
+           },1000);
         }
 
     }

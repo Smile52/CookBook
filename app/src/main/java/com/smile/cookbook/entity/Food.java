@@ -1,5 +1,6 @@
 package com.smile.cookbook.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class Food {
         this.childList = childList;
     }
 
-    public static class ChildBean {
+    public static class ChildBean implements Serializable{
         /**
          * ctgId : 0010001007
          * name : 荤菜

@@ -4,15 +4,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
                 android:id="@+id/swipe_layout">
-            <TextView
-                android:id="@+id/cook_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/foods_rcv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-     >
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/foods_rcv"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              >
 
-    </android.support.v7.widget.RecyclerView>
+          </android.support.v7.widget.RecyclerView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/top_acb"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|bottom"
+            android:src="@drawable/top_icon"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"/>
+      </FrameLayout>
+
 </android.support.v4.widget.SwipeRefreshLayout>

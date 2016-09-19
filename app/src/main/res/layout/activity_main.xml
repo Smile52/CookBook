@@ -43,7 +43,7 @@
             android:id="@+id/cook_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:elevation="5dp"
             >
 
         </com.smile.cookbook.view.SlidingTabLayout>
