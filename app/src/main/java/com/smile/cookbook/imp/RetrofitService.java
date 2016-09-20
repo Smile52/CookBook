@@ -23,7 +23,7 @@ public interface RetrofitService {
 
 
     @GET("menu/search?")
-    Call<FoodForTag> getFoodForTag(@FieldMap Map<String ,String> map);
+    Call<FoodForTag> getFoodForTag(@QueryMap Map<String ,String> map);
 
 
 

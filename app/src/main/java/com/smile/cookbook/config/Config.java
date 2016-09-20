@@ -5,6 +5,9 @@ package com.smile.cookbook.config;
  */
 public class Config {
     public static final String KEY="1435a9040c867";
-
-
+    public static final String PARAMS_KEY="key";
+    public static final String PARAMS_PAGE="page";
+    public static final String PARAMS_CID="cid";
+    public static final String PARAMS_SIZE="size";
+    public static final String PARAMS_ID="id";
 }

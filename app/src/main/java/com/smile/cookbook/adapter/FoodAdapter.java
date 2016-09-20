@@ -48,7 +48,12 @@ import java.util.List;
         if (holder instanceof FoodViewHold){
             FoodForTag.ResultBean.ListBean bean=mFoods.get(position);
             ((FoodViewHold) holder).mName.setText(bean.getName());
-            Glide.with(mContext).load(bean.getRecipe().getImg()).into(((FoodViewHold) holder).mImg);
+            Glide.with(mContext)
+                    .load(bean.getRecipe().getImg())
+                    .override(600, 600) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .error(R.mipmap.ic_launcher)
+                    .into(((FoodViewHold) holder).mImg);
             if (onItemClickListener!=null){
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

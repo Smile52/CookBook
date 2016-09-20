@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,18 @@ import android.widget.TextView;
 
 import com.smile.cookbook.R;
 import com.smile.cookbook.adapter.FoodAdapter;
+import com.smile.cookbook.config.Config;
 import com.smile.cookbook.entity.Food;
+import com.smile.cookbook.entity.FoodForTag;
+import com.smile.cookbook.imp.ImpRequest;
+import com.smile.cookbook.utils.RetrofitUtil;
 import com.smile.cookbook.utils.XLog;
 import com.smile.cookbook.view.PopMenu;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**类别fragment
  * Created by Smile on 2016/9/9.
@@ -29,6 +36,7 @@ public class CookFragment extends Fragment {
     private SwipeRefreshLayout mRefreshLayout;
     private FoodAdapter mAdapter;
     private FloatingActionButton mTop;
+    private List<FoodForTag.ResultBean.ListBean> mfoods;
     public static Fragment instance(List<Food.ChildBean> msg){
         CookFragment fragment=new CookFragment();
         Bundle bundle = new Bundle() ;
@@ -67,11 +75,41 @@ public class CookFragment extends Fragment {
                 menu.showAsDropDown(view);
             }
         });
+        Map<String,String> params=addParams(msg.get(0).getCtgId(),"1","20");
+        RetrofitUtil.getInstance().setBaseUrl().setTimeout(10000).addFactory().build().getFoodForTag(params, new ImpRequest() {
+            @Override
+            public void onSuccess(Object o) {
+                FoodForTag forTag= (FoodForTag) o;
+                mfoods=forTag.getResult().getList();
+                XLog.e("dandy","size "+mfoods.size());
+                mAdapter=new FoodAdapter(getContext(),mfoods);
+                mFoodViews.setLayoutManager(new GridLayoutManager(getContext(),2));
+                mFoodViews.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
 
 
     }
 
-    public void  addParams(String id){
+    /**
+     * 设置请求参数
+     * @param cid
+     * @param page 页码
+     * @param size 返回的数量
+     */
+    public Map addParams(String cid,String page,String size){
+        Map<String,String> map=new HashMap<>();
+        map.put(Config.PARAMS_KEY,Config.KEY);
+        map.put(Config.PARAMS_CID,cid);
+        map.put(Config.PARAMS_PAGE,page);
+        map.put(Config.PARAMS_SIZE,size);
+        return  map;
 
     }
 
