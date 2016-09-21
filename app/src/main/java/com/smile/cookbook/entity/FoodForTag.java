@@ -1,11 +1,12 @@
 package com.smile.cookbook.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**根据标签获取的菜
  * Created by Smile on 2016/9/9.
  */
-public class FoodForTag {
+public class FoodForTag implements Serializable {
 
 
 
@@ -39,7 +40,7 @@ public class FoodForTag {
         this.retCode = retCode;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         private int curPage;
         private int total;
         /**
@@ -77,7 +78,7 @@ public class FoodForTag {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Serializable {
             private String ctgTitles;
             private String menuId;
             private String name;
@@ -141,7 +142,7 @@ public class FoodForTag {
                 this.ctgIds = ctgIds;
             }
 
-            public static class RecipeBean {
+            public static class RecipeBean implements Serializable{
                 private String img;
                 private String ingredients;//配料
                 private String method;//方法

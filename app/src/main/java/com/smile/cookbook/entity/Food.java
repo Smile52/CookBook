@@ -43,7 +43,7 @@ public class Food {
             this.categoryInfo = categoryInfo;
         }
 
-        public static class CategoryInfoBean {
+        public static class CategoryInfoBean implements  Serializable{
             private String ctgId;
             private String name;
             private String parentId;

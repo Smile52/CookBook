@@ -1,5 +1,6 @@
 package com.smile.cookbook.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -76,7 +77,7 @@ public class FoodStyle {
             this.childs = childs;
         }
 
-        public static class CategoryInfoBean {
+        public static class CategoryInfoBean implements Serializable {
             private String ctgId;
             private String name;
 
@@ -135,7 +136,7 @@ public class FoodStyle {
                 this.childs = childs;
             }
 
-            public static class CategoryInfoBean {
+            public static class CategoryInfoBean implements Serializable {
                 private String ctgId;
                 private String name;
                 private String parentId;
@@ -191,7 +192,7 @@ public class FoodStyle {
                     this.categoryInfo = categoryInfo;
                 }
 
-                public static class CategoryInfoBean {
+                public static class CategoryInfoBean implements Serializable {
                     private String ctgId;
                     private String name;
                     private String parentId;

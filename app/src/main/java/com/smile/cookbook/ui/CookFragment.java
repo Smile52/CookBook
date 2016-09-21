@@ -1,8 +1,12 @@
 package com.smile.cookbook.ui;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,11 +22,13 @@ import com.smile.cookbook.config.Config;
 import com.smile.cookbook.entity.Food;
 import com.smile.cookbook.entity.FoodForTag;
 import com.smile.cookbook.imp.ImpRequest;
+import com.smile.cookbook.utils.GridSpacingItemDecoration;
 import com.smile.cookbook.utils.RetrofitUtil;
 import com.smile.cookbook.utils.XLog;
 import com.smile.cookbook.view.PopMenu;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +42,7 @@ public class CookFragment extends Fragment {
     private SwipeRefreshLayout mRefreshLayout;
     private FoodAdapter mAdapter;
     private FloatingActionButton mTop;
-    private List<FoodForTag.ResultBean.ListBean> mfoods;
+    private List<FoodForTag.ResultBean.ListBean> mfoods=new ArrayList<>();
     public static Fragment instance(List<Food.ChildBean> msg){
         CookFragment fragment=new CookFragment();
         Bundle bundle = new Bundle() ;
@@ -83,9 +89,13 @@ public class CookFragment extends Fragment {
                 mfoods=forTag.getResult().getList();
                 XLog.e("dandy","size "+mfoods.size());
                 mAdapter=new FoodAdapter(getContext(),mfoods);
+                int spanCount = 2;//跟布局里面的spanCount属性是一致的
+                int spacing = 5;//每一个矩形的间距
+                boolean includeEdge = true;//如果设置成false那边缘地带就没有间距
                 mFoodViews.setLayoutManager(new GridLayoutManager(getContext(),2));
+                mFoodViews.addItemDecoration(new GridSpacingItemDecoration(spanCount,spacing,includeEdge));
                 mFoodViews.setAdapter(mAdapter);
-
+                ItemOnClickListener();
             }
 
             @Override
@@ -94,6 +104,32 @@ public class CookFragment extends Fragment {
             }
         });
 
+
+    }
+
+    private void  ItemOnClickListener(){
+        mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+               startNewAcitivity(view,mfoods.get(position).getRecipe().getImg());
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void startNewAcitivity(View view,String id) {
+        Intent intent = new Intent(getActivity(),FoodDetailActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString(Config.PARAMS_ID,id);
+        intent.putExtras(bundle);
+        ActivityOptionsCompat  options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),view.findViewById(R.id.food_img),"photos");
+        getContext().startActivity( intent, options.toBundle());
 
     }
 

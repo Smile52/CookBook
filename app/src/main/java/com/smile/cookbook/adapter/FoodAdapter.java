@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.smile.cookbook.R;
 import com.smile.cookbook.entity.FoodForTag;
+import com.smile.cookbook.utils.XLog;
 
 import java.util.List;
 
@@ -46,8 +47,11 @@ import java.util.List;
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FoodViewHold){
+
             FoodForTag.ResultBean.ListBean bean=mFoods.get(position);
             ((FoodViewHold) holder).mName.setText(bean.getName());
+
+            XLog.e("dandy ","name "+bean.getName()+"  img "+bean.getRecipe().getImg());
             Glide.with(mContext)
                     .load(bean.getRecipe().getImg())
                     .override(600, 600) // resizes the image to these dimensions (in pixel)
