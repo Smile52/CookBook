@@ -42,6 +42,8 @@ public class CookFragment extends Fragment {
     private SwipeRefreshLayout mRefreshLayout;
     private FoodAdapter mAdapter;
     private FloatingActionButton mTop;
+    private  GridLayoutManager manager ;
+    private   boolean isLoading;
     private List<FoodForTag.ResultBean.ListBean> mfoods=new ArrayList<>();
     public static Fragment instance(List<Food.ChildBean> msg){
         CookFragment fragment=new CookFragment();
@@ -69,10 +71,10 @@ public class CookFragment extends Fragment {
        // mTextView= (TextView) view.findViewById(R.id.cook_tv);
         mFoodViews= (RecyclerView) view.findViewById(R.id.foods_rcv);
         mRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
+        mRefreshLayout.setRefreshing(true);
         mTop= (FloatingActionButton) view.findViewById(R.id.top_acb);
         Bundle bundle = getArguments() ;
         final List<Food.ChildBean.CategoryInfoBean> msg = (List<Food.ChildBean.CategoryInfoBean>) bundle.getSerializable("msg");
-        XLog.e("dandy"," msg  "+msg.size());
 
         mTop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +83,12 @@ public class CookFragment extends Fragment {
                 menu.showAsDropDown(view);
             }
         });
+
         Map<String,String> params=addParams(msg.get(0).getCtgId(),"1","20");
         RetrofitUtil.getInstance().setBaseUrl().setTimeout(10000).addFactory().build().getFoodForTag(params, new ImpRequest() {
             @Override
             public void onSuccess(Object o) {
+                mRefreshLayout.setRefreshing(false);
                 FoodForTag forTag= (FoodForTag) o;
                 mfoods=forTag.getResult().getList();
                 XLog.e("dandy","size "+mfoods.size());
@@ -92,19 +96,46 @@ public class CookFragment extends Fragment {
                 int spanCount = 2;//跟布局里面的spanCount属性是一致的
                 int spacing = 5;//每一个矩形的间距
                 boolean includeEdge = true;//如果设置成false那边缘地带就没有间距
-                mFoodViews.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+                final GridLayoutManager manager=new GridLayoutManager(getContext(),2);
+
                 mFoodViews.addItemDecoration(new GridSpacingItemDecoration(spanCount,spacing,includeEdge));
+                //如果当前item是底部 则单独占一行
+                manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        XLog.e("dandy","span "+ (mAdapter.isFooter(position)? 2 :1));
+                      return mAdapter.isFooter(position)? 2 :1;
+                    }
+                });
+                mFoodViews.setLayoutManager(manager);
                 mFoodViews.setAdapter(mAdapter);
                 ItemOnClickListener();
             }
 
             @Override
             public void onFailure() {
-
+                mRefreshLayout.setRefreshing(false);
             }
         });
 
 
+    }
+
+    private void  loadMoreData(){
+        mFoodViews.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+            }
+        });
     }
 
     private void  ItemOnClickListener(){

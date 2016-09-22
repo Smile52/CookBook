@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.smile.cookbook.R;
 import com.smile.cookbook.entity.FoodForTag;
-import com.smile.cookbook.utils.XLog;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ import java.util.List;
             FoodForTag.ResultBean.ListBean bean=mFoods.get(position);
             ((FoodViewHold) holder).mName.setText(bean.getName());
 
-            XLog.e("dandy ","name "+bean.getName()+"  img "+bean.getRecipe().getImg());
+           // XLog.e("dandy ","name "+bean.getName()+"  img "+bean.getRecipe().getImg());
             Glide.with(mContext)
                     .load(bean.getRecipe().getImg())
                     .override(600, 600) // resizes the image to these dimensions (in pixel)
@@ -98,11 +97,20 @@ import java.util.List;
 
     @Override
     public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()) {
+        if (position+1  == getItemCount()) {
             return TYPE_FOOTER;
         } else {
             return TYPE_ITEM;
         }
+    }
+
+    /**
+     * 判断当前postion是不是底部view
+     * @param postion
+     * @return
+     */
+    public boolean isFooter(int postion){
+        return postion==(mFoods.size());
     }
 
     class FoodViewHold extends RecyclerView.ViewHolder{
