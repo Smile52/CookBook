@@ -10,4 +10,6 @@ public class Config {
     public static final String PARAMS_CID="cid";
     public static final String PARAMS_SIZE="size";
     public static final String PARAMS_ID="id";
+
+    public static final String KEY_FOOD="food";
 }

@@ -157,7 +157,7 @@ public class CookFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
 
-               startNewAcitivity(view,mfoods.get(position).getRecipe().getImg());
+               startNewAcitivity(view,mfoods.get(position));
             }
 
             @Override
@@ -168,10 +168,11 @@ public class CookFragment extends Fragment {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void startNewAcitivity(View view,String id) {
+    private void startNewAcitivity(View view, FoodForTag.ResultBean.ListBean bean) {
         Intent intent = new Intent(getActivity(),FoodDetailActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putString(Config.PARAMS_ID,id);
+        //bundle.putString(Config.PARAMS_ID,id);
+        bundle.putSerializable(Config.KEY_FOOD,bean);
         intent.putExtras(bundle);
         ActivityOptionsCompat  options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),view.findViewById(R.id.food_img),"photos");
         getContext().startActivity( intent, options.toBundle());
