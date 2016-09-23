@@ -30,8 +30,6 @@ public class WecomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         mFoods= SQLController.getInstances(CookApplication.getContextObject()).getTypeInfo();
         XLog.e("dandy","woqu "+mFoods.size());
         if (mFoods==null||mFoods.size()<=0){

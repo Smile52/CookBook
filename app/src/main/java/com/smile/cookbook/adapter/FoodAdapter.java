@@ -2,6 +2,7 @@ package com.smile.cookbook.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,10 @@ import java.util.List;
     public FoodAdapter(Context context, List<FoodForTag.ResultBean.ListBean> foods) {
         mContext = context;
         mFoods = foods;
+
+        if (mFoods==null){
+            return;
+        }
         mInflater=LayoutInflater.from(mContext);
     }
 
@@ -92,6 +97,7 @@ import java.util.List;
 
     @Override
     public int getItemCount() {
+        Log.e("dandy","size "+mFoods.size());
         return mFoods.size() == 0 ? 0 : mFoods.size() + 1;
     }
 

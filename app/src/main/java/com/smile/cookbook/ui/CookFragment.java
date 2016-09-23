@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,8 @@ public class CookFragment extends Fragment {
         mRefreshLayout.setRefreshing(true);
         mTop= (FloatingActionButton) view.findViewById(R.id.top_acb);
         Bundle bundle = getArguments() ;
-        final List<Food.ChildBean.CategoryInfoBean> msg = (List<Food.ChildBean.CategoryInfoBean>) bundle.getSerializable("msg");
+        final List<Food.ChildBean.CategoryInfoBean> msg =
+                 (List<Food.ChildBean.CategoryInfoBean>) bundle.getSerializable("msg");
 
         mTop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,7 @@ public class CookFragment extends Fragment {
                 FoodForTag forTag= (FoodForTag) o;
                 mfoods=forTag.getResult().getList();
                 XLog.e("dandy","size "+mfoods.size());
+                mfoods=filterData(mfoods);
                 mAdapter=new FoodAdapter(getContext(),mfoods);
                 int spanCount = 2;//跟布局里面的spanCount属性是一致的
                 int spacing = 5;//每一个矩形的间距
@@ -119,7 +122,18 @@ public class CookFragment extends Fragment {
             }
         });
 
-
+    }
+    private List<FoodForTag.ResultBean.ListBean> filterData(List<FoodForTag.ResultBean.ListBean> foods){
+        List<FoodForTag.ResultBean.ListBean> newFoods=new ArrayList<>();
+        for (FoodForTag.ResultBean.ListBean bean:foods){
+            Log.e("dandy","img  "+bean.getRecipe().getImg());
+           if (bean.getRecipe().getImg()==null){
+               continue;
+           }else {
+               newFoods.add(bean);
+           }
+        }
+        return newFoods;
     }
 
     private void  loadMoreData(){
